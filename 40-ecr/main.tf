@@ -3,7 +3,7 @@
 resource "aws_ecr_repository" "repos" {
   for_each = toset(var.components)
 
-  name                 = "${var.project}/${each.value}"
+  name                 = "${var.project_name}/${each.value}"
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
