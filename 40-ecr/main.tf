@@ -9,4 +9,5 @@ resource "aws_ecr_repository" "repos" {
   image_scanning_configuration {
     scan_on_push = false
   }
+  force_delete = true
 }
