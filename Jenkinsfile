@@ -70,7 +70,7 @@ pipeline {
             }
         }
 // Destroy Flow //
-        stage('Parellel'){
+        stage('Parellel Destroy'){
             when { expression { params.ACTION == 'destroy' } }
             parallel {
                 stage('Bastion')   {
