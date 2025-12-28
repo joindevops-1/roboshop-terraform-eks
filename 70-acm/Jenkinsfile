@@ -25,7 +25,7 @@ pipeline {
                 script{
                     withAWS(region:'us-east-1',credentials:'aws-creds') {
                         sh """
-                            cd 00-vpc
+                            cd 70-acm
                             terraform init
                         """
                     }
@@ -37,7 +37,7 @@ pipeline {
                 script{
                     withAWS(region:'us-east-1',credentials:'aws-creds') {
                         sh """
-                            cd 00-vpc
+                            cd 70-acm
                             terraform plan
                         """
                     }
@@ -58,7 +58,7 @@ pipeline {
                 script{
                     withAWS(region:'us-east-1',credentials:'aws-creds') {
                         sh """
-                            cd 00-vpc
+                            cd 70-acm
                             terraform apply -auto-approve
                         """
                     }
