@@ -141,19 +141,21 @@ pipeline {
 
 def terraformRun(String dirName) {
   dir(dirName) {
-    sh """
-      set -euo pipefail
-      echo "=== Terraform ${params.ACTION.toUpperCase()} @ ${dirName} ==="
+    withAWS(credentials: 'aws-creds', region: 'us-east-1') {
+        sh """
+        set -euo pipefail
+        echo "=== Terraform ${params.ACTION.toUpperCase()} @ ${dirName} ==="
 
-      terraform --version
-      terraform init
+        terraform --version
+        terraform init
 
-      if [ "${params.ACTION}" = "apply" ]; then
-        terraform plan -out=tfplan -input=false
-        terraform apply -input=false -auto-approve tfplan
-      else
-        terraform destroy -auto-approve
-      fi
-    """
+        if [ "${params.ACTION}" = "apply" ]; then
+            terraform plan -out=tfplan -input=false
+            terraform apply -input=false -auto-approve tfplan
+        else
+            terraform destroy -auto-approve
+        fi
+        """
+    }
   }
 }
