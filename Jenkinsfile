@@ -21,19 +21,19 @@ pipeline {
     // This is build section
     stages {
         
-        stage('VPC'){
+        stage('VPC apply'){
             when { expression { params.ACTION == 'apply' } }
             steps { 
                 terraformRun('00-vpc') 
             }
         }
-        stage('SG'){
+        stage('SG apply'){
             when { expression { params.ACTION == 'apply' } }
             steps { 
                 terraformRun('10-sg') 
             }
         }
-        stage('Parellel'){
+        stage('Parellel apply'){
             when { expression { params.ACTION == 'apply' } }
             parallel {
                 stage('Bastion')   {
@@ -63,7 +63,7 @@ pipeline {
                 }
             }
         }
-        stage('Frontend ALB'){
+        stage('Frontend ALB apply'){
             when { expression { params.ACTION == 'apply' } }
             steps { 
                 terraformRun('80-frontend-alb') 
@@ -102,19 +102,19 @@ pipeline {
                 
             }
         }
-        stage('ACM'){
+        stage('ACM Destory'){
             when { expression { params.ACTION == 'destroy' } }
             steps {
                     terraformRun('70-acm') 
             }
         }
-        stage('SG'){
+        stage('SG Destory'){
             when { expression { params.ACTION == 'destroy' } }
             steps { 
                 terraformRun('10-sg') 
             }
         }
-        stage('VPC'){
+        stage('VPC Destory'){
             when { expression { params.ACTION == 'destroy' } }
             steps { 
                 terraformRun('00-vpc') 
